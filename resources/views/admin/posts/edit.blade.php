@@ -13,28 +13,43 @@
                 {{-- @csrf deve essere inserito in tutti i form altrimenti il form non è valido --}}
                 @csrf
                 @method('PUT')
+
                 <div class="mb-3">
                     <label for="name" class="form-label sc-label">Titolo Post</label>
                     {{-- il name dell'input deve corrispondere al nome della colonna della tabella di riferimento --}}
                     <input type="text" id="name" name="title"
-                    value="{{$post->title }}"
-                    class="form-control"
+                    value="{{old('title', $post->title) }}"
+                    class="form-control @error('title') is-invalid @enderror"
                     placeholder="Titolo Post">
+
+                    @error('title')
+                        <p class="error-msg"> {{$message}} </p>
+                    @enderror
                 </div>
+
                 <div class="mb-3">
                     <label for="slug" class="form-label">Slug</label>
                     <input type="text" id="slug"
                     name="slug"
-                    value="{{$post->slug }}"
-                    class="form-control"
+                    value="{{old('slug', $post->slug) }}"
+                    class="form-control @error('slug') is-invalid @enderror"
                     placeholder="Slug post" >
+
+                    @error('slug')
+                        <p class="error-msg"> {{$message}} </p>
+                    @enderror
                 </div>
+
                 <div class="mb-3">
                     <label for="content" class="form-label">Content</label>
                     <textarea
-                    class="form-control"
-                    name="content" id="content" cols="30" rows="10">{{ $post->content }}</textarea>
+                    class="form-control @error('content') is-invalid @enderror"
+                    name="content" id="content" cols="30" rows="10">{{old('content', $post->content) }}</textarea>
                 </div>
+
+                @error('content')
+                    <p class="error-msg text-danger"> {{$message}} </p>
+                 @enderror
 
                 <button type="submit" class="btn btn-primary">Invia</button>
             </form>

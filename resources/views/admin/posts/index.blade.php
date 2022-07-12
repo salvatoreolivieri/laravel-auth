@@ -5,6 +5,12 @@
     <div class="container">
         <h1 class="mt-3 mb-4">Tutti i post esistenti</h1>
 
+        @if(session('prodotto_cancellato'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('prodotto_cancellato') }}
+            </div>
+        @endif
+
         <table class="table">
             <thead>
               <tr>
@@ -26,7 +32,7 @@
                             <a class="btn btn-primary" href="{{route('admin.posts.edit', $post)}}">Edit</a>
 
                             <form class="d-inline"
-                             action=""
+                             action="{{route('admin.posts.destroy', $post)}}"
                              method="POST">
                              @csrf
                              @method('DELETE')
@@ -36,7 +42,10 @@
                     </tr>
                 @endforeach
             </tbody>
-          </table>
+        </table>
+        <div>
+            {{ $posts->links() }}
+        </div>
     </div>
 
 @endsection
